@@ -1,0 +1,26 @@
+from selenium import webdriver
+import time
+
+
+driver = webdriver.Chrome(executable_path=r'C:\Users\Шива\PycharmProjects\webDriver\chromedriver')
+
+try:
+    driver.get("https://career.netpeak.group/hiring/")
+    driver.maximize_window()
+    driver.refresh()
+#открыть сайт, развернуть окно, перезагрузить страницу
+    time.sleep(5)
+
+    courses_xpath = "//*[@class='blog']"
+    driver.find_element_by_xpath(courses_xpath).click()
+    time.sleep(2)
+#нажать на кнопку "курсы"
+
+    string_URL = driver.current_url
+    assert string_URL == "https://school.netpeak.group/", "Validation Failed"
+    print("Validation Passed")
+#убедиться в том, что открылась верная страница
+
+finally:
+    driver.close()
+    driver.quit()
