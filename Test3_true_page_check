@@ -2,7 +2,7 @@ from selenium import webdriver
 import time
 
 
-driver = webdriver.Chrome(executable_path=r'C:\Users\Шива\PycharmProjects\webDriver\chromedriver')
+driver = webdriver.Chrome()
 
 try:
     driver.get("https://career.netpeak.group/hiring/")
