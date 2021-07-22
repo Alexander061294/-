@@ -1,0 +1,51 @@
+from selenium import webdriver
+import time
+
+
+driver = webdriver.Chrome(executable_path=r'C:\Users\Шива\PycharmProjects\webDriver\chromedriver')
+
+
+try:
+    driver.get("https://netpeak.ua")
+    driver.maximize_window()
+    driver.refresh()
+#открыть сайт, развернуть окно, перезагрузить страницу
+    time.sleep(2)
+
+    career_xpath = "//div[@class='main-navigation']//a[text()='Карьера']"
+
+    driver.find_element_by_xpath(career_xpath).click()
+    time.sleep(2)
+#нажать на кнопку "карьера"
+    driver.switch_to.window(driver.window_handles[1])
+#перейти в открывшуюся вкладку
+    time.sleep(2)
+
+
+    driver.execute_script("window.scrollTo(0, 3000)")
+    time.sleep(2)
+#прокрутить до кнопки "я хочу работать в Netpeak"
+    want_xpath = "//a[@class='btn green-btn' and text()='Я хочу работать в Netpeak']"
+    driver.find_element_by_xpath(want_xpath).click()
+    time.sleep(2)
+#нажать на кнопку "я хочу работать в Netpeak"
+    driver.save_screenshot("screenshot.png")
+#сделать скриншот экрана
+    resume_id = "upload"
+    element = driver.find_element_by_id(resume_id)
+    time.sleep(2)
+#нажать кнопку "загрузить резюме"
+    element.send_keys("C:\\Users\\Шива\\PycharmProjects\\untitled1\\тестовое задание\\screenshot.png")
+    time.sleep(2)
+#загрузить сделанный ранее скриншот
+
+
+    assert "up_file_name" in driver.page_source, "Validation Failed"
+    print("Validation Passed")
+    time.sleep(2)
+
+#убедиться, что появилось сообщение о неверном формате
+
+finally:
+    driver.close()
+    driver.quit()
