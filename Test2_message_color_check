@@ -1,0 +1,92 @@
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.color import Color
+from selenium.webdriver.support.ui import Select
+
+driver = webdriver.Chrome(executable_path=r'C:\Users\Шива\PycharmProjects\webDriver\chromedriver')
+
+try:
+    driver.get("https://career.netpeak.group/hiring/")
+    driver.maximize_window()
+    driver.refresh()
+#открыть сайт, развернуть окно, перезагрузить страницу
+    time.sleep(5)
+
+#заполнить поля в 3м разделе
+    Input_Name = "inputName"
+    driver.find_element_by_id(Input_Name).click()
+    Name_field = driver.find_element_by_id(Input_Name)
+    Name_field.send_keys("Ivan")
+
+
+    Input_Lastname = "inputLastname"
+    driver.find_element_by_id(Input_Lastname).click()
+    Lastname_field = driver.find_element_by_id(Input_Lastname)
+    Lastname_field.send_keys("Ivanov")
+
+
+    Input_Email = "inputEmail"
+    driver.find_element_by_id(Input_Email).click()
+    Email_field = driver.find_element_by_id(Input_Email)
+    Email_field.send_keys("Ivanov@mail.ru")
+
+
+    Input_Phone = "inputPhone"
+    driver.find_element_by_id(Input_Phone).click()
+    Phone_field = driver.find_element_by_id(Input_Phone)
+    Phone_field.send_keys("81234567890")
+
+
+
+    List_Year = "//*[@id='user-main-info']/div[11]/div[2]/select"
+    driver.find_element_by_xpath(List_Year).click()
+    time.sleep(3)
+    Year_drp = driver.find_element_by_xpath(List_Year)
+    Year_drp_select = Select(Year_drp)
+    Year_drp_select.select_by_visible_text("2000")
+
+
+
+    List_Month = "//*[@id='user-main-info']/div[11]/div[3]/select"
+    driver.find_element_by_xpath(List_Month).click()
+    time.sleep(3)
+    Month_drp = driver.find_element_by_xpath(List_Month)
+    Month_drp_select = Select(Month_drp)
+    Month_drp_select.select_by_visible_text("января")
+
+
+
+    List_Day_xpath = "//*[@id='user-main-info']/div[11]/div[4]/select"
+    driver.find_element_by_xpath(List_Day_xpath).click()
+    time.sleep(3)
+    List_Day = driver.find_element_by_xpath(List_Day_xpath)
+    Day_drp_select = Select(List_Day)
+    Day_drp_select.select_by_visible_text("1")
+
+    driver.execute_script("window.scrollTo(0, 1000)")
+    time.sleep(2)
+#прокрутить страницу вниз
+    send = "submit"
+    driver.find_element_by_id(send).click()
+#нажать на кнопку "отправить анкету"
+    time.sleep(2)
+
+    driver.execute_script("window.scrollTo(1000, 0)")
+    time.sleep(2)
+#прокрутить вверх
+
+
+    warning_fields = "//*[@class='warning-fields help-block']"
+    warning_fields_colour = Color.from_string(driver.find_element(By.XPATH, warning_fields).value_of_css_property("color"))
+    assert warning_fields_colour.hex == '#ff0000', "Validation Failed"
+    print("Validation Passed")
+    time.sleep(2)
+#убедиться в том, что цвет текста "все поля являются обязательными для заполнения" красный
+    time.sleep(5)
+
+
+finally:
+    driver.close()
+    driver.quit()
+
